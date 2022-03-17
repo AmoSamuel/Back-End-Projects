@@ -64,22 +64,22 @@ const idInvalidCardCompanies = batchArray =>{
   for(let i = 0;i<batchArray.length;i++){
     var innerArrayLength = batchArray[i].length;
     for(let j = 0; j < innerArrayLength;j++){
-      // if(batchArray[i][0] === 3){
-      //   companyToContact.push('Amex');
-      // }else if(batchArray[i][0] === 4){
-      //    companyToContact.push('Visa');
-      // }else if(batchArray[i][0] === 5){
-      //   companyToContact.push('Mastercard');
-      // }else if(batchArray[i][0] === 6){
-      //   companyToContact.push('Discover');
-      // }else{
-      //   console.log('Company not found');
-      // }
+      if(batchArray[i][0] === 3){
+        companyToContact.push('Amex');
+      }else if(batchArray[i][0] === 4){
+         companyToContact.push('Visa');
+      }else if(batchArray[i][0] === 5){
+        companyToContact.push('Mastercard');
+      }else if(batchArray[i][0] === 6){
+        companyToContact.push('Discover');
+      }else{
+        console.log('Company not found');
+      }
 
 
     }
   }
-  //return companyToContact
+  return companyToContact
 }
 
 const number = [[10,50],[10,20], [10,12]];
