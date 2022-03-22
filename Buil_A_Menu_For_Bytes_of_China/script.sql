@@ -256,6 +256,72 @@ left join category
 on category.id = categories_dishes.dish_category;
 
 
+SELECT MAX(rating) AS best_rating FROM review;
+
+SELECT dish.name 
+AS dish_name,categories_dishes.price 
+AS price,category.name 
+AS category  
+FROM dish INNER 
+JOIN categories_dishes 
+ON dish.id =categories_dishes.dish_id 
+INNER JOIN category 
+ON categories_dishes.category_id=category.id 
+ORDER BY 1;
+
+
+SELECT category.name AS category,dish.name AS dish_name,categories_dishes.price AS price 
+FROM dish 
+INNER JOIN categories_dishes 
+ON dish.id =categories_dishes.dish_id INNER 
+JOIN category 
+ON categories_dishes.category_id=category.id 
+ORDER BY 1;
+
+SELECT category.name 
+AS category,dish.name 
+AS dish_name,categories_dishes.price 
+AS price 
+FROM dish 
+INNER JOIN categories_dishes 
+ON dish.id =categories_dishes.dish_id 
+INNER JOIN category 
+ON categories_dishes.category_id=category.id 
+ORDER BY 1;
+
+
+SELECT dish.name AS spicy_dish_name,category.name AS category,categories_dishes.price AS price  
+FROM dish 
+INNER JOIN categories_dishes 
+ON dish.hot_and_spicy=TRUE AND dish.id =categories_dishes.dish_id 
+INNER JOIN category ON categories_dishes.category_id=category.id 
+ORDER BY 1;
+
+
+
+SELECT dish_id , 
+COUNT(dish_id) 
+FROM categories_dishes 
+GROUP BY dish_id;
+SELECT dish_id , 
+COUNT(dish_id) 
+FROM categories_dishes 
+GROUP BY dish_id 
+HAVING COUNT(dish_id)>1;
+
+SELECT dish.name 
+AS dish_name ,
+COUNT(categories_dishes.dish_id) AS dish_count
+FROM dish ,categories_dishes
+GROUP BY dish.id ,dish.name ,categories_dishes.dish_id
+HAVING COUNT(categories_dishes.dish_id)>1 
+AND categories_dishes.dish_id= dish.id ;
+
+SELECT rating AS best_rating, description
+FROM review
+WHERE  rating = ( SELECT MAX(rating) from review );
+
+
 
 
 
