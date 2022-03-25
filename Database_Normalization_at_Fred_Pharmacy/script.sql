@@ -76,8 +76,7 @@ WHERE order_date > '2019-08-25';
 SELECT customer_email
 FROM customers, orders
 WHERE customers.customer_id = orders.customer_id
-AND
-orders.date > '2019-08-25';
+AND orders.date > '2019-08-25';
 
 WITH all_items AS (
 SELECT item_1_id as item_id 
