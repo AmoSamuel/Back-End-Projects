@@ -24,78 +24,80 @@ const batch = [valid1, valid2, valid3, valid4, valid5, invalid1, invalid2, inval
 
 
 // Add your functions below:
-const validateCred = arr =>{
-  let newArray = [];
-  let sum = 0;
- let firstNumber = arr.pop();
-  arr.reverse()
-  
-  for(let i = 0; i< arr.length;i++){
-    if(i % 2 === 0){
-      arr[i]*=2;
-      if(arr[i] > 9){
-        arr[i]-=9;
+function validateCred(numArr) {
+  let total = 0;
+  for (let i = numArr.length - 1; i >= 0; i--) {
+    let currValue = numArr[i]
+    if ((numArr.length - 1 - i) % 2 === 1) {
+      currValue *= 2;
+      if (currValue > 9) {
+        currValue -= 9;
       }
     }
-    newArray.push(arr[i]);
+    total += currValue;
+  }
+
+  return total % 10 === 0;
+
 }
 
-newArray.push(firstNumber);
-for(let i = 0; i < newArray.length;i++){
-   sum = sum + newArray[i];
-}
+// Test functions:
+console.log(validateCred(valid1)); // Should print true
+console.log(validateCred(invalid1)); // Should print false
 
-  return (sum % 10) === 0;
-}
-  
-// function to check if a batch of cards are invalid
-const findInvalidCards = batchOfArray =>{
-  let inValidCards = [];
-  for(let i = 0; i < batch.length; i++){
-    if(validateCred(batch[i]) === false){
-      inValidCards.push(batch[i]);
+function findInvalidCards(cards) {
+  const invalid = [];
+
+  for (let i = 0; i < cards.length; i++) {
+    let currCred = cards[i];
+    if (!validateCred(currCred)) {
+      invalid.push(currCred);
     }
   }
-  return inValidCards;
+
+  return invalid;
 }
 
-const idInvalidCardCompanies = batchArray =>{
-  let companyToContact = [];
-  for(let i = 0;i<batchArray.length;i++){
-    var innerArrayLength = batchArray[i].length;
-    for(let j = 0; j < innerArrayLength;j++){
-      if(batchArray[i][0] === 3){
-        companyToContact.push('Amex');
-      }else if(batchArray[i][0] === 4){
-         companyToContact.push('Visa');
-      }else if(batchArray[i][0] === 5){
-        companyToContact.push('Mastercard');
-      }else if(batchArray[i][0] === 6){
-        companyToContact.push('Discover');
-      }else{
+// Test function
+console.log(findInvalidCards([valid1, valid2, valid3, valid4, valid5]));// Shouldn't print anything
+console.log(findInvalidCards([invalid1, invalid2, invalid3, invalid4, invalid5])); // Should print all of the numbers
+
+console.log(findInvalidCards(batch)); // Test what the mystery numbers are
+
+function idInvalidCardCompanies(invalidBatch) {
+  const companies = [];
+  for (let i = 0; i < invalidBatch.length; i++) {
+    switch (invalidBatch[i][0]) {
+      case 3:
+        if (companies.indexOf('Amex') === -1) {
+          companies.push('Amex');
+        }
+        break
+      case 4:
+        if (companies.indexOf('Visa') === -1) {
+          companies.push('Visa');
+        }
+        break
+      case 5:
+        if (companies.indexOf('Mastercard') === -1) {
+          companies.push('Mastercard');
+        }
+        break
+      case 6:
+        if (companies.indexOf('Discover') === -1) {
+          companies.push('Discover');
+        }
+        break
+      default:
         console.log('Company not found');
-      }
-
-
     }
   }
-  return companyToContact
+  return companies;
 }
 
-const number = [[10,50],[10,20], [10,12]];
-const display = arr=>{
-  number.forEach((num)=>{
-    number.forEach((numm)=>{
-       console.log(numm);
-    });
-});
-}
-
-//console.log(idInvalidCardCompanies(inValidCards));
-
-//console.log(number);
-display(number);
-
+console.log(idInvalidCardCompanies([invalid1])); // Should print['visa']
+console.log(idInvalidCardCompanies([invalid2])); // Should print ['mastercard']
+console.log(idInvalidCardCompanies(batch)); // Find out which companies have mailed out invalid cards
 
 
 
