@@ -12,12 +12,13 @@ const mockUpStrand = () => {
   }
   return newStrand
 }
-
+// Returns an object that contains the properties specimenNum and dna and the methods mutate, compareDNA, willLikelySurvive and complementStrand
 const pAequorFactory = (number, dnaBases)=>{
   return{
     _specNumber: number,
     _dna:dnaBases,
-
+    
+// Returns object dna with randomly selected and mutated base
     mutate(){
       let currentbase = Math.floor(Math.random() * this._dna.lenth);
       let withoutA = ['T', 'C', 'G'];
@@ -36,6 +37,7 @@ const pAequorFactory = (number, dnaBases)=>{
       }
       return this._dna;
     },
+    // Compares current Specimen with passed in Specimen and prints % of DNA in common
     compareDNA(pAequor){
       let identicalCounter = 0;
       for(let i = 0;i < this._dna.length;i++){
@@ -45,10 +47,35 @@ const pAequorFactory = (number, dnaBases)=>{
       }
       let percentageDNA = Math.floor((identicalCounter/ this._dna.length) * 100);
       console.log(`speciment ${this._specNumber} and ${pAequor._specNumber} have ${percentageDNA}% DNA in common`);
-    }
+    },
+    
+     willLikelySurvive() {
+        cAndGCounter = 0;
+        for (let i = 0; i < this._dna.length; i++) {
+          if (this._dna[i] === 'C' || this._dna[i] === 'G') {
+            cAndGCounter++;
+          }
+        }
+        if (cAndGCounter < 9) {
+          return false;
+        } else {
+          return true;
+        }
+      }
 
   }
+    
 };
+
+const survivors = [];
+  while (survivors.length < 30) {
+    pAequorNumber = survivors.length + 1;
+    newPAequor = pAequorFactory(pAequorNumber, mockUpStrand());
+    if (newPAequor.willLikelySurvive() === true) {
+      survivors.push(newPAequor);
+    }
+  }
+  console.log(survivors);
 
 
 
